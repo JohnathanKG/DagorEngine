@@ -20,6 +20,7 @@ folder {
   scan_subfolders:b=true
   wildcard:t="*.json"
   wildcard:t="*.blk"
+  wildcard:t="*.ttf"
   wildcard:t="*.nut"
   wildcard:t="*.das"
   wildcard:t="*.patch"
@@ -53,6 +54,14 @@ folder {
   scan_folder:b=true
   scan_subfolders:b=true
   wildcard:t=*.nut
+}
+folder {  
+  path:t="fonts"
+  dest_path:t="ui/fonts"
+  scan_folder:b=true
+  scan_subfolders:b=true
+  wildcard:t=*.ttf
+  wildcard:t=*.blk
 }
 folder {
   path:t="../../prog/scripts/sq/daeditor"

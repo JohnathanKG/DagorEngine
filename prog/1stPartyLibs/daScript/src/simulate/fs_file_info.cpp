@@ -3,6 +3,9 @@
 #include "daScript/simulate/fs_file_info.h"
 #include "daScript/misc/sysos.h"
 #include "daScript/ast/ast.h"
+#include "osApiWrappers/dag_basePath.h"
+#include <cstring>
+#include <string_view>
 
 #define DASLIB_MODULE_NAME  "daslib"
 #define DASTEST_MODULE_NAME "dastest"
@@ -110,8 +113,24 @@ namespace das {
 
     das::FileInfo * FsFileAccess::getNewFileInfo(const das::string & fileName) {
         for ( auto & fs : fileSystems ) {
-            if ( auto info = fs.first->tryOpenFile(fileName) ) {
-                return setFileInfo(fileName, FileInfoPtr(info));
+
+            das::string thing = fileName;
+            if(thing.at(0) == '%')
+            {
+                thing = thing.substr(1);
+                size_t firstSlash = thing.find('/');
+                const  char* things = dd_get_named_mount_path(thing.c_str(), firstSlash);
+                das::string mountPath(things);
+                mountPath.append(thing.substr(firstSlash));
+                if(auto info = fs.first->tryOpenFile(mountPath))
+                    return setFileInfo(fileName, FileInfoPtr(info));
+
+            }
+            else 
+            {
+                if(auto info = fs.first->tryOpenFile(fileName) ) {
+                    return setFileInfo(fileName, FileInfoPtr(info));
+                }
             }
         }
         return nullptr;

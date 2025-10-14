@@ -1,3 +1,4 @@
+options indenting = 2
 require ecs
 require DagorMath
 require math

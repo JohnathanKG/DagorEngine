@@ -1,3 +1,4 @@
+options indenting = 2
 require app
 require ecs
 require soundEvent

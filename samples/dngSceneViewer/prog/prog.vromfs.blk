@@ -148,6 +148,16 @@ folder{
   wildcard:t="*.patch"
 }
 
+folder {
+  output:t="dng_scene_viewer.vromfs.bin"
+  path:t="fonts/"
+  dest_path:t="fonts/"
+  scan_folder:b=true
+  scan_subfolders:b=true
+  wildcard:t=*.ttf
+  wildcard:t=*.blk
+}
+
 folder{
   output:t="content/east_district/east_district.vromfs.bin"
   path:t="gamebase_package./"
@@ -175,7 +185,6 @@ preprocess {
 
 packBlk {
   exclude:t="\.gameparams\.blk$"
-
   include:t=".*.blk$"
   include:t="\.settings\.blk$"
 }

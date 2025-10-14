@@ -1,5 +1,5 @@
 module net_utils_common shared
-
+options indenting = 2
 require ecs
 require net
 require DngNet

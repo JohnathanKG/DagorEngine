@@ -9,7 +9,7 @@ if ! $(__DEFAULTS_INCLUDED) {
   include $(Root)/prog/_jBuild/defPlatform.jam ;
 
   PlatformSpec_$(Platform) ?= $(PlatformSpec_$(Platform)_$(PlatformArch)) ;
-  PlatformSpec_windows ?= vc17 ;
+  PlatformSpec_windows ?= clang ;
   PlatformSpec_xboxOne ?= clang ;
   PlatformSpec_scarlett ?= clang ;
   PlatformSpec_ps4 ?= clang ;
@@ -20,7 +20,7 @@ if ! $(__DEFAULTS_INCLUDED) {
   PlatformSpec_nswitch ?= clang ;
   PlatformSpec_android ?= clang ;
   PlatformSpec_linux ?= gcc ;
-  CLangVer ?= 18.1.8 ;
+  CLangVer ?= 21.1.0 ;
   DefaultCPPStd = 20 ;
   CPPStd ?= 20 ;
   Sanitize ?= disabled ;

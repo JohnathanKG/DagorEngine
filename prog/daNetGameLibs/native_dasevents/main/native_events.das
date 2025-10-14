@@ -1,4 +1,5 @@
 module native_events shared
+options indenting = 2
 require ecs
 require RendInst
 

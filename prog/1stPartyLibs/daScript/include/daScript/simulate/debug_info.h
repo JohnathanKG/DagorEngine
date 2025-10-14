@@ -134,6 +134,7 @@ namespace das
         const char *          source = nullptr;
         uint32_t              sourceLength = 0;
         bool                  owner = true;
+        
     };
 
     struct ModuleInfo {

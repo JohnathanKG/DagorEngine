@@ -1,9 +1,15 @@
+#include "EASTL/string.h"
 #include "daScript/ast/aot_templates.h"
 #include "daScript/daScript.h"
 #include "daScript/das_common.h"
 #include "daScript/simulate/fs_file_info.h"
 #include "../dasFormatter/fmt.h"
 #include "daScript/ast/ast_aot_cpp.h"
+#include "../../../dagorInclude/util/dag_string.h"
+#include "ioSys/dag_dataBlock.h"
+#include "osApiWrappers/dag_basePath.h"
+#include "osApiWrappers/dag_direct.h"
+#include "util/dag_baseDef.h"
 
 // aot das-mode temporary disabled
 // #include "../../src/das/ast/_standalone_ctx_generated/ast_aot_cpp.das.h"
@@ -177,6 +183,10 @@ int das_aot_main ( int argc, char * argv[] ) {
     bool das_mode = false;
     char * standaloneContextName = nullptr;
     char * standaloneClassName = nullptr;
+
+
+    DataBlock config;
+
     if ( argc>3  ) {
         for (int ai = 4; ai != argc; ++ai) {
             if ( strcmp(argv[ai],"-q")==0 ) {
@@ -211,6 +221,43 @@ int das_aot_main ( int argc, char * argv[] ) {
                     return -1;
                 }
                 setDasRoot(argv[ai+1]);
+                ai += 1;
+            } else if ( strcmp(argv[ai],"-config")==0 ) {
+                if ( ai+1 > argc ) {
+                    
+                    tout << "config requires argument";
+                    return -1;
+                }
+                String configPath(argv[ai + 1]);
+                char config_dir[DAGOR_MAX_PATH] = {0};
+                dd_get_fname_location(config_dir, configPath);
+                String configDir(config_dir);
+                bool loaded = config.load("C:/develop/DagorEngine/outerSpace/game/outer_space.config.blk");
+            
+                if (!loaded)
+                {
+                  logerr("Unable to load config file '%s'", configPath.c_str());
+                }
+                else
+                {
+                    const int mountPointsId = config.getNameId("mountPoints");
+                    for (int i = 0; i < config.blockCount(); ++i)
+                    {
+                      const DataBlock *childBlock = config.getBlock(i);
+                      if (childBlock->getBlockNameId() == mountPointsId)
+                      {
+                        for (int j = 0; j < childBlock->paramCount(); ++j)
+                        {
+                          String mountPath = configDir + childBlock->getStr(j);
+                          dd_simplify_fname_c(mountPath);
+                          dd_set_named_mount_path(childBlock->getParamName(j), mountPath);
+                          String thing("%dasGameLibs");
+                          auto tho = dd_get_named_mount_path(thing.c_str());
+                          (void)0;
+                        }
+                      }
+                    }
+                }
                 ai += 1;
             } else if ( strcmp(argv[ai],"-v2syntax")==0 ) {
                 version2syntax = true;
@@ -437,6 +484,7 @@ namespace das {
 
 int MAIN_FUNC_NAME ( int argc, char * argv[] ) {
     bool isArgAot = false;
+    
     // // aot das-mode temporary disabled
     // force_aot_stub();
     if (argc > 1) {
@@ -459,6 +507,7 @@ int MAIN_FUNC_NAME ( int argc, char * argv[] ) {
     bool outputProgramCode = false;
     bool pauseAfterDone = false;
     bool dryRun = false;
+    DataBlock config;
     optional<format::FormatOptions> formatter;
     for ( int i=1; i < argc; ++i ) {
         if ( argv[i][0]=='-' ) {
@@ -578,7 +627,39 @@ int MAIN_FUNC_NAME ( int argc, char * argv[] ) {
                 // do nohting, script handles it
             } else if ( cmd=="-das-profiler-memory" ) {
                 // do nohting, script handles it
-            } else if ( !scriptArgs) {
+            }
+            else if( cmd=="-config") {
+                String configPath(argv[i+1]);
+                char config_dir[DAGOR_MAX_PATH] = {0};
+                dd_get_fname_location(config_dir, configPath);
+                String configDir(config_dir);
+                bool loaded = config.load(configPath);
+            
+                if (!loaded)
+                {
+                  printf("Unable to load config file '%s'", configPath.c_str());
+                }
+                else
+                {
+                    const int mountPointsId = config.getNameId("mountPoints");
+                    for (int i = 0; i < config.blockCount(); ++i)
+                    {
+                      const DataBlock *childBlock = config.getBlock(i);
+                      if (childBlock->getBlockNameId() == mountPointsId)
+                      {
+                        for (int j = 0; j < childBlock->paramCount(); ++j)
+                        {
+                          String mountPath = configDir + childBlock->getStr(j);
+                          dd_simplify_fname_c(mountPath);
+                          dd_set_named_mount_path(childBlock->getParamName(j), mountPath);
+                          
+                        }
+                      }
+                    }
+                }
+                i++;
+            }
+            else if ( !scriptArgs) {
                 printf("unknown command line option %s\n", cmd.c_str());
                 print_help();
                 return -1;
@@ -622,6 +703,120 @@ int MAIN_FUNC_NAME ( int argc, char * argv[] ) {
     NEED_MODULE(Module_JobQue);
     NEED_MODULE(Module_FIO);
     NEED_MODULE(Module_DASBIND);
+    
+
+    NEED_MODULE(DagorMath);
+    NEED_MODULE(DagorDataBlock);
+    NEED_MODULE(DagorSystem);
+    NEED_MODULE(ECS);
+    NEED_MODULE(DagorTexture3DModule)
+    NEED_MODULE(DagorResPtr)
+    NEED_MODULE(DagorDriver3DModule)
+    NEED_MODULE(DagorShaders)
+    NEED_MODULE(PriorityShadervarModule)
+    NEED_MODULE(DagorStdGuiRender)
+    NEED_MODULE(DagorTime)
+    NEED_MODULE(DagorBase64)
+    NEED_MODULE(DagorMathUtils)
+    NEED_MODULE(GameMathModule)
+    NEED_MODULE(DagorConsole)
+    NEED_MODULE(Module_dasQUIRREL)
+    NEED_MODULE(DagorQuirrelModule)
+    NEED_MODULE(DagorInputModule)
+    NEED_MODULE(DagorRandom)
+    NEED_MODULE(DagorFiles)
+    NEED_MODULE(DagorFindFiles)
+    NEED_MODULE(DagorResources)
+    NEED_MODULE(DagorEditorModule)
+    NEED_MODULE(GridModule)
+    NEED_MODULE(Module_JsonWriter)
+    NEED_MODULE(Module_RapidJson)
+    NEED_MODULE(JsonUtilsModule)
+    NEED_MODULE(RegExpModule)
+    NEED_MODULE(DngAppModule)
+    NEED_MODULE(DngLevelModule)
+    NEED_MODULE(DngGameObjectModule)
+    NEED_MODULE(FxModule)
+    NEED_MODULE(SceneModule)
+    NEED_MODULE(WorldRendererModule)
+    NEED_MODULE(GamePhysModule)
+    NEED_MODULE(GeomNodeTreeModule)
+    NEED_MODULE(PhysDeclModule)
+    NEED_MODULE(AnimV20)
+    NEED_MODULE(CollRes)
+    NEED_MODULE(RendInstModule)
+    NEED_MODULE(DacollModule)
+    NEED_MODULE(ProjectiveDecalsModule)
+    NEED_MODULE(BitStreamModule)
+    NEED_MODULE(NetModule)
+    NEED_MODULE(DngNetModule)
+    NEED_MODULE(ClientNetModule)
+    NEED_MODULE(DngNetPhysModule)
+    NEED_MODULE(SoundEventModule)
+    NEED_MODULE(SoundStreamModule)
+    NEED_MODULE(SoundSystemModule)
+    NEED_MODULE(SoundHashModule)
+    NEED_MODULE(SoundPropsModule)
+    NEED_MODULE(SoundNetPropsModule)
+    NEED_MODULE(ZonesModule)
+    NEED_MODULE(GpuReadbackQueryModule)
+    NEED_MODULE(HeightmapQueryManagerModule)
+    NEED_MODULE(PortalRendererModule)
+    NEED_MODULE(RenderLibsAllowedModule)
+    NEED_MODULE(LandMeshModule)
+    NEED_MODULE(CollisionTracesModule)
+    NEED_MODULE(GridCollisionModule)
+    NEED_MODULE(DngActorModule)
+    NEED_MODULE(PlayerModule)
+    NEED_MODULE(GameTimersModule)
+    NEED_MODULE(LagCatcherModule)
+    NEED_MODULE(DaSkiesModule)
+    NEED_MODULE(PhysVarsModule)
+    NEED_MODULE(StreamingModule)
+    NEED_MODULE(ECSGlobalTagsModule)
+    NEED_MODULE(CurrentCircuitModule)
+    NEED_MODULE(DagorDebug3DModule)
+    NEED_MODULE(DagorDebug3DSolidModule)
+    NEED_MODULE(DngPhysModule)
+    NEED_MODULE(ActionModule)
+    NEED_MODULE(DaProfilerModule)
+    NEED_MODULE(EcsUtilsModule)
+    NEED_MODULE(StatsdModule)
+    NEED_MODULE(AnimatedPhysModule)
+    NEED_MODULE(SmokeOccluderModule)
+    NEED_MODULE(RiDestrModule)
+    NEED_MODULE(RendInstPhysModule)
+    NEED_MODULE(DngUIModule)
+    NEED_MODULE(ModuleDarg);
+    NEED_MODULE(DngCameraModule)
+    NEED_MODULE(PhysMatModule)
+    NEED_MODULE(CapsuleApproximationModule)
+    NEED_MODULE(EffectorDataModule)
+    NEED_MODULE(TouchInputModule)
+    NEED_MODULE(DaphysModule)
+    NEED_MODULE(CameraShakerModule)
+    NEED_MODULE(DngCameraShakerModule)
+    //NEED_MODULE(WebSocketModule)
+    NEED_MODULE(Module_dasIMGUI)
+    NEED_MODULE(Module_dasIMGUI_NODE_EDITOR)
+    NEED_MODULE(DagorImguiModule)
+    NEED_MODULE(ForceFeedbackRumbleModule)
+    NEED_MODULE(PropsRegistryModule)
+    NEED_MODULE(NetPropsRegistryModule)
+    NEED_MODULE(NetstatModule)
+    NEED_MODULE(ClipmapDecalsModule)
+    NEED_MODULE(ReplayModule)
+    NEED_MODULE(VideoPlayer)
+    NEED_MODULE(DagorMaterials)
+    NEED_MODULE(DngDacollModule)
+    NEED_MODULE(DeferToActModule)
+    NEED_MODULE(DaFgCoreModule)
+    NEED_MODULE(ResourceSlotCoreModule)
+    NEED_MODULE(SystemInfoModule)
+    NEED_MODULE(AuthModule)
+    NEED_MODULE(MatchingModule)
+    NEED_MODULE(DngMatchingModule)
+    NEED_MODULE(CompressionModule)
     require_project_specific_modules();
     #include "modules/external_need.inc"
     Module::Initialize();
@@ -638,6 +833,7 @@ int MAIN_FUNC_NAME ( int argc, char * argv[] ) {
         }
     }
     // and done
+    
     if ( pauseAfterDone ) getchar();
     Module::Shutdown();
 #if DAS_SMART_PTR_TRACKER

@@ -1,0 +1,24 @@
+{
+    "dascript.project.compilationConcurrency": 10,
+    "dascript.project.file": "C:\\develop\\DagorEngine\\outerSpace\\prog\\plugin.das_project",
+    "dascript.compiler": "C:\\develop\\DagorEngine\\outerSpace\\tools\\das\\outer_space-aot-windows-x86_64-c-dev.exe",
+    "dascript.experimental": true,
+    "dascript.project.roots": [
+
+
+
+        "C:/develop/DagorEngine/prog/1stPartyLibs/daScript",
+        "C:/develop/DagorEngine/prog",
+        "C:/develop/DagorEngine/prog/gameLibs/das"
+    ],
+    "dascript.policies.version_2_syntax": false,
+    "dascript.project.fileAccessRoots": {
+        "danetlibs": "C:/develop/DagorEngine/prog",
+        "dasGameLibs": "C:/develop/DagorEngine/prog/gameLibs/das"
+    },
+    "dascript.server.args": [
+        "${file}",
+        "-v1syntax"
+    ],
+    "dascript.policies.gen2_make_syntax": true,
+}

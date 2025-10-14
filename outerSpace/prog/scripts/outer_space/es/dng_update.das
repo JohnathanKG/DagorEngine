@@ -1,5 +1,5 @@
 require ecs
-
+options indenting = 2
 //These events will be removed after all DNG-based games use ParallelUpdateFrameDelayed for dng systems
 [event(broadcast)] // here for inability to use anywhere
 struct UpdatePhysEvent

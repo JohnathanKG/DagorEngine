@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 
 import sys
 import json
@@ -42,4 +41,3 @@ for line in sys.stdin:
         cur_action.append(line)
 
 print(json.dumps(actions, indent=2))
-

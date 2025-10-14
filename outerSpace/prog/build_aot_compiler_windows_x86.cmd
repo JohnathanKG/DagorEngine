@@ -1,2 +1,2 @@
-jam -sRoot=../.. -sProjectLocation=outerSpace/prog -sTarget=outer_space-aot -sOutDir=../tools/das-aot ^
-  -f../../prog/daNetGame-das-aot/jamfile
+buildconsole /FREECOMPLETEDTASKS=ON /command="jam -sRoot=../.. -sProjectLocation=outerSpace/prog -sTarget=outer_space-aot -sOutDir=../tools/das ^
+  -f../../prog/daNetGame-das/jamfile"

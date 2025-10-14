@@ -1,0 +1,8 @@
+{
+    "clangd.arguments": [
+        "-compile-commands-dir=C:\\develop\\DagorEngine\\samples\\skiesSample\\prog\\.vscode"
+    ],
+    "clangd.fallbackFlags": [
+        "-std=c++20"
+    ]
+}

@@ -33,7 +33,7 @@ if $(BuildDagorEngineIndependentCode) != yes {
 }
 if $(Analyze) = yes { _DEF_C_CMDLINE = [ StripStrings $(_DEF_C_CMDLINE) : -D_USING_V110_SDK71_ ] -analyze -WX ; }
 
-_LINK         = $(_VC_DIR_BIN)/link.exe ;
+_LINK         = C:/develop/radlink.exe ;
 _LIB          = $(_VC_DIR_BIN)/lib.exe ;
 _CPP_COMPILER = $(_VC_DIR_BIN)/cl.exe $(_DEF_C_CMDLINE) ;
 _C_COMPILER   = $(_VC_DIR_BIN)/cl.exe $(_DEF_C_CMDLINE) ;

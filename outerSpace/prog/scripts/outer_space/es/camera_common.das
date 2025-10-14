@@ -1,4 +1,5 @@
 module camera_common shared
+options indenting = 2
 require daslib/safe_addr
 require ecs
 require ecs.safe

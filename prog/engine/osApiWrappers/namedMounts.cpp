@@ -102,8 +102,8 @@ const char *dd_resolve_named_mount_in_path(const char *fpath, const char *&mnt_p
 void dd_dump_named_mounts()
 {
   ScopedLockReadTemplate<OSReadWriteLock> lock(named_mounts_rwlock);
-#if DAGOR_DBGLEVEL > 0 || DAGOR_FORCE_LOGS
-  debug("registered %d named mount(s)%s", named_mounts.size(), named_mounts.size() > 0 ? ":" : "");
+//#if DAGOR_DBGLEVEL > 0 || DAGOR_FORCE_LOGS
+  printf("registered %d named mount(s)%s", named_mounts.size(), named_mounts.size() > 0 ? ":" : "");
   typedef eastl::pair<const char *, const char *> str_pair;
   dag::Vector<str_pair> sorted_mounts;
   sorted_mounts.reserve(named_mounts.size());
@@ -112,8 +112,8 @@ void dd_dump_named_mounts()
   stlsort::sort(sorted_mounts.begin(), sorted_mounts.end(),
     [](const str_pair &a, const str_pair &b) { return strcmp(a.first, b.first) < 0; });
   for (auto &it : sorted_mounts)
-    debug("  %%%s = %s", it.first, it.second);
-#endif
+    printf("  %%%s = %s", it.first, it.second);
+//#endif
 }
 
 #define EXPORT_PULL dll_pull_osapiwrappers_namedMounts

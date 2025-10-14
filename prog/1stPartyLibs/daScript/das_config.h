@@ -112,7 +112,7 @@ inline size_t das_aligned_memsize(void *ptr) { return defaultmem->getSize(ptr); 
 #endif
 
 #ifndef DAS_MAX_FUNCTION_ARGUMENTS
-#define DAS_MAX_FUNCTION_ARGUMENTS 32
+#define DAS_MAX_FUNCTION_ARGUMENTS 64
 #endif
 
 #ifndef DAS_PRINT_VEC_SEPARATROR

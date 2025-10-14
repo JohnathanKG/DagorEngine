@@ -131,6 +131,7 @@ static SQInteger debug_dump_callstack(HSQUIRRELVM v)
 static SQInteger script_assert(HSQUIRRELVM v)
 {
   G_UNUSED(v);
+  G_UNUSED(buf_string_key);
 #if DAGOR_DBGLEVEL > 0 || DAGOR_FORCE_LOGS
   SQInteger prevTop = sq_gettop(v);
   G_UNUSED(prevTop);

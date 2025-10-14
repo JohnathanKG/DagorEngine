@@ -1,4 +1,5 @@
 module events_outer_space shared
+options indenting = 2
 require ecs
 require DngNet
 require danetlibs.native_dasevents.main.native_events public

@@ -37,7 +37,7 @@ if $(PlatformSpec) in gcc clang {
   if $(Platform) in windows xboxOne scarlett { xclang = /clang:- ; }
   if $(PlatformSpec) = clang { CPPopt += -Wno-overriding-option ; } # for -fno-trapping-math after -fno-unsafe-math-optimizations
   if $(Platform) in macOS iOS ps4 ps5 nswitch linux { CPPopt += -Wno-overriding-t-option ; } # ditto for older clang ver
-  CPPopt += $(xclang)fno-unsafe-math-optimizations $(xclang)fno-trapping-math $(xclang)ffp-contract=off ;
+  CPPopt += $(xclang)Wno-overriding-option $(xclang)fno-unsafe-math-optimizations $(xclang)fno-trapping-math $(xclang)ffp-contract=off ;
   if $(PlatformArch) in x86 x86_64 { CPPopt += $(xclang)mno-fma ; }
 }
 

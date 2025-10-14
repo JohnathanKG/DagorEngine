@@ -6,8 +6,7 @@
 #include <daScript/simulate/fs_file_info.h>
 
 void os_debug_break() {printf("unhandled exception?\n");_exit(1);}
-void foo() {dd_get_fname("");} //== pull in directoryService.obj
-void require_project_specific_modules() {}//
+
 
 das::smart_ptr<das::FileAccess> get_file_access( char * pak )
 {
@@ -16,18 +15,15 @@ das::smart_ptr<das::FileAccess> get_file_access( char * pak )
   return das::make_smart<das::FsFileAccess>();
 }
 
-das::Context* get_clone_context( das::Context * ctx, uint32_t category )
+void require_project_specific_modules()
 {
-    return new das::Context(*ctx, category);
+  das::pull_all_auto_registered_modules();
 }
 
-
-das::Context* get_context(int stack_size)
-{
-    return new das::Context(stack_size);
-}
+void require_project_specific_debugger_modules() {}
 
 namespace das
 {
 vector<void *> force_aot_stub() { return {}; }
 } // namespace das
+// Copyright (C) Gaijin Games KFT.  All rights reserved.

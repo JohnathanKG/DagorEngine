@@ -2045,14 +2045,14 @@ YY_RULE_SETUP
             #ifdef FLEX_DEBUG
             printf("INVALID INDENT at %i, emit BEGIN_STRING\n", yyextra->das_current_line_indent);
             #endif
-            das_yyfatalerror(yylloc_param,yyscanner,"invalid indentation"); // pretend tab was pressed
+            //das_yyfatalerror(yylloc_param,yyscanner,"invalid indentation"); // pretend tab was pressed
             return BEGIN_STRING;
         }
         if ( yyextra->das_current_line_indent % yyextra->das_tab_size ) {
             #ifdef FLEX_DEBUG
             printf("INVALID INDENT at %i, emit {\n", yyextra->das_current_line_indent);
             #endif
-            das_yyfatalerror(yylloc_param,yyscanner,"invalid indentation"); // pretend tab was pressed
+            //das_yyfatalerror(yylloc_param,yyscanner,"invalid indentation"); // pretend tab was pressed
             yyextra->das_current_line_indent = (yyextra->das_current_line_indent + yyextra->das_tab_size) & ~(yyextra->das_tab_size-1);
         }
         yylval_param->i = yyextra->das_indent_level;

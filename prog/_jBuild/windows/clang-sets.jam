@@ -51,6 +51,7 @@ local _DEF_C_CMDLINE =
   /c /nologo /Zc:forScope /J /Zc:inline
   /Zc:dllexportInlines-
   -Xclang -mrecip=none
+  -march=haswell
   -Wno-c++11-narrowing
   -Wno-trigraphs
   -Wno-argument-outside-range
@@ -72,6 +73,8 @@ local _DEF_C_CMDLINE =
   -Wno-deprecated-declarations
   -Wno-constant-conversion
   -Wno-unused-local-typedef
+  -Wno-unused-command-line-argument
+  -Wno-overriding-option
   -Wno-ignored-pragmas
   -Wno-switch
   -Werror=invalid-noreturn
@@ -124,11 +127,15 @@ if $(UseWholeOpt) = yes {
 if $(Sanitize) != disabled {
   UseLLDLink = no ; # currently there is false positive for ODR violation on string literals
 }
-
 if $(UseLLDLink) != yes {
   _LINK = $(_VC_DIR_BIN)/link.exe ;
-} else {
+}
+else {
   _LINK = $(_CLANG_DIR)/bin/lld-link.exe ; #we have to allow /force:multiple, otherwise it is not linking with effects :(
+}
+
+if $(UseRadlink) = yes {
+  _LINK = C:/develop/radlink.exe ;
 }
 _LIB  = $(_CLANG_DIR)/bin/lld-link.exe /lib ;
 LINK_RESPONSE_MARKER = @@@ ;
