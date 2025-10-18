@@ -651,8 +651,7 @@ int MAIN_FUNC_NAME ( int argc, char * argv[] ) {
                         {
                           String mountPath = configDir + childBlock->getStr(j);
                           dd_simplify_fname_c(mountPath);
-                          dd_set_named_mount_path(childBlock->getParamName(j), mountPath);
-                          
+                          dd_set_named_mount_path(childBlock->getParamName(j), mountPath);                          
                         }
                       }
                     }

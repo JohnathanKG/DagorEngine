@@ -800,10 +800,6 @@ namespace das
     }
 
     FileInfo * FileAccess::getFileInfo ( const string & fileName ) {
-        if(fileName[0] == '%')
-        {
-            
-        }
         auto it = files.find(fileName);
         if ( it != files.end() ) {
             return it->second.get();

@@ -56,7 +56,7 @@ goto sphinx_ok
 
 :sphinx_python
 
-set SPHINXBUILD=call "C:\Documents and Settings\All Users\Anaconda2\python" -m sphinx.__init__
+set SPHINXBUILD=call "python" -m sphinx.cmd.build
 %SPHINXBUILD% 2> nul
 if errorlevel 9009 (
     echo.

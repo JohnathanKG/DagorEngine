@@ -1,0 +1,43 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        // {
+        //     "type": "dascript",
+        //     "request": "launch",
+        //     "name": "daScript: Launch",
+        //     "program": "${config:dascript.compiler} ${file} --das-wait-debugger  --das-profiler -- --file C:/develop/DagorEngine/prog/1stPartyLibs/daScript/examples/main.das --version-2-syntax",
+        //     "cwd": "C:/develop/DagorEngine/prog/1stPartyLibs/daScript",
+        // },
+        {
+            "name": "(Windows) Launch",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "C:/develop/DagorEngine/tools/util/das-64-dev.exe",
+            "args": [
+                "C:/Users/18172/Downloads/daScript-plugin/server/validate_file.das",
+                "--das-profiler",
+                "--config",
+                "C:/develop/DagorEngine/outerSpace/prog/outer_space_aot_config.blk",
+                "-project",
+                "C:/develop/DagorEngine/outerSpace/prog/plugin.das_project",
+                "-dasroot",
+                "C:/develop/DagorEngine/prog/1stPartyLibs/daScript",
+                "--",
+                "--file",
+                "C:/develop/DagorEngine/outerSpace/prog/scripts/outer_space/es/camera_common.das",
+                "--project-file",
+                "C:/develop/DagorEngine/outerSpace/prog/plugin.das_project",
+                "--gen2-make-syntax",
+                "--das-root",
+                "C:/develop/DagorEngine/prog/1stPartyLibs/daScript",
+            ],
+            "stopAtEntry": false,
+            "cwd": "C:/Users/18172/Downloads/daScript-plugin/server",
+            "environment": [],
+            "console": "externalTerminal"
+        }
+    ]
+}
